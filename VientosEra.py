@@ -85,4 +85,57 @@ for i in (range(fecha1,fecha2+1)):
                      f.write(line2+"\n")
              
    
- 
+
+###promedio de vientos Mayos multianual#######################con fecha de Mayo2004
+
+
+fechasrange=pd.date_range(start='1979/1/1', end='2017/12/31/18',freq='6H')
+
+Mayos=np.where(fechasrange.month==5)[0]
+
+fechasMayo=pd.date_range(start='2017/05/1', end='2017/05/31/18',freq='6H')
+fechas_Mayo= np.array([fechasMayo[i].strftime('%Y%m%d %H%M%S') for i in range(len(fechasMayo))])
+
+
+
+MediaMM=np.zeros([124,8,8])*np.NaN
+DatosMayo=Vwind[Mayos]
+for j in range(len(latnew)):
+	for k in range (len(lonnew)):
+		mediaM=np.reshape(DatosMayo[:,j,k],(39,124))
+		MediaMM[:,j,k]=np.mean(mediaM,axis=0)
+	
+
+MediaMMU=np.zeros([124,8,8])*np.NaN
+DatosMayo=Uwind[Mayos]
+for j in range(len(latnew)):
+	for k in range (len(lonnew)):
+		mediaM=np.reshape(DatosMayo[:,j,k],(39,124))
+		MediaMMU[:,j,k]=np.mean(mediaM,axis=0)
+
+
+
+
+for i in (range(len(MediaMM))):
+    with open('WIND_Mayos__2004.wind','a') as f:
+        f.write(fechas[fecha1:fecha2+1][i]+"\n")
+        for k in range (len(latnew)):
+            line = "%s%s" % ('    ', "    ".join(map(str,(MediaMMU[i][k]))))
+            f.write(line+"\n")
+            if k==len(latnew)-1:
+                 for j in range (len(latnew)):
+                     line2 = "%s%s" % ('    ', "    ".join(map(str,(MediaMM[i][j]))))
+                     f.write(line2+"\n")
+             
+   
+
+
+
+
+
+
+
+
+
+
+
